@@ -44,7 +44,7 @@ angular
           url: '/demos/geoshapes',
           views: {
             '@': {
-              templateUrl: 'views/main.html'
+              templateUrl: 'views/demos/geoshapes/index.html'
             }
           }
         })

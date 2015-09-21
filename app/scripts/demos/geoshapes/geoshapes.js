@@ -3,9 +3,8 @@
 angular.module('workbook.demos.geoshapes', [])
 .directive('polygonMap', ['ESClient', '$parse', function(ESClient, $parse) {
 	return {
-		restrict: 'E',
+		restrict: 'EA',
 		replace: true,
-		templateUrl: 'views/demo/geoshapes/index.html',
 		link: function (scope, elm, attrs) {
 			scope.deleteSelectedShape = function() {
 			  scope.selectedShape.setMap(null);

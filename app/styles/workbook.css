@@ -1,5 +1,11 @@
+body {
+	font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
 body > .workbook-sidenav {
-	width: 256px;     min-width: 256px;     max-width: 256px;
+	width: 200px;
+	min-width: 256px;
+	max-width: 256px;
 }
 
 body > .workbook-sidenav>header {
@@ -19,26 +25,61 @@ body > .workbook-sidenav>header {
 }
 
 body > .workbook-sidenav>header>img {
-	height: 50px;
-	width: 100;
+	width: 120px;
 	display: block;
 }
 
-body > .workbook-sidenav>h3 {
+body > .workbook-sidenav>h1 {
 	margin: 0px;
 	text-align: center;
-	background: #B2DFDB;
+	background: #39bdb1;
 	padding: 10px 0px;
-	font-family: Roboto, 'Helvetica Neue', sans-serif;
-	font-size: 14px;
+	font-size: 26px;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: 500;
-	color: #E0F2F1;
+	color: white;
 }
 
 body > .workbook-sidenav>.workbook-sidenav-content {
 	background-color: #39bdb1;
+}
+
+body > .workbook-sidenav>.workbook-sidenav-content ul {
+	margin: 0;
+  list-style: none;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body > .workbook-sidenav>.workbook-sidenav-content > ul > li {
+	border-bottom: 1px solid #B2DFDB;
+}
+
+body > .workbook-sidenav>.workbook-sidenav-content > ul > li .md-button {
+	border-radius: 0;
+	color: white;
+	cursor: pointer;
+	display: block;
+	align-items: inherit;
+	line-height: 40px;
+	margin: 0;
+	max-height: 40px;
+	overflow: hidden;
+	padding: 0px 16px;
+	text-align: left;
+	text-decoration: none;
+	white-space: normal;
+	width: 100%;
+}
+
+body > .workbook-sidenav>.workbook-sidenav-content > ul > li ul.menu-toggle-list a.md-button {
+  display: block;
+  padding: 0 16px 0 32px;
+  text-transform: none;
+  text-rendering: optimizeLegibility;
+  font-weight: 500;
 }
 
 body > .workbook-content {
