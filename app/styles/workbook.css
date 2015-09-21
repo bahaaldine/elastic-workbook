@@ -1,0 +1,58 @@
+body > .workbook-sidenav {
+	width: 256px;     min-width: 256px;     max-width: 256px;
+}
+
+body > .workbook-sidenav>header {
+	text-align: center;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-align-items: center;
+	        align-items: center;
+	color: #106CC8;
+  text-decoration: none;
+  font-weight: 400;
+  transition: border-bottom 0.35s;
+  background-color: #39bdb1;
+  padding: 10px 0px;
+}
+
+body > .workbook-sidenav>header>img {
+	height: 50px;
+	width: 100;
+	display: block;
+}
+
+body > .workbook-sidenav>h3 {
+	margin: 0px;
+	text-align: center;
+	background: #B2DFDB;
+	padding: 10px 0px;
+	font-family: Roboto, 'Helvetica Neue', sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	color: #E0F2F1;
+}
+
+body > .workbook-sidenav>.workbook-sidenav-content {
+	background-color: #39bdb1;
+}
+
+body > .workbook-content {
+	width: 100%;
+}
+
+body > .workbook-content>.workbook-content-toolbar {
+	background: #f6f6f6 !important;
+	color: #39bdb1;
+	z-index: 3;
+}
+
+.md-whiteframe-glow-z1 {
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
+              0px 0px 2px 2px rgba(0, 0, 0, 0.098),
+              0px 0px 5px 1px rgba(0, 0, 0, 0.084);
+}

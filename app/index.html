@@ -1,0 +1,99 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/highlightjs/styles/default.css" />
+    <!-- endbower -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" />
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css"> 
+    <!-- endbuild -->
+    <link rel="stylesheet" href="styles/geoshape.css"> 
+    <link rel="stylesheet" href="styles/workbook.css"> 
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&libraries=drawing"></script>
+  </head>
+  <body ng-app="workbookApp" ng-controller="workbookCtrl" layout="row" class="layout layout-row">
+   
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <md-sidenav class="workbook-sidenav" layout="column" md-component-id="left" md-is-locked-open="true">
+        <header class="nav-header"><img src="images/logo.svg" alt=""></header>
+        <h3 class="docs-logotype md-heading">Workbook</h3>
+        <md-content class="workbook-sidenav-content" flex="" role="navigation" class="flex md-default-theme">
+          <ul class="side-menu">
+            <li ng-repeat="section in vm.menu.sections" class="parent-list-item"
+                ng-class="{'parentActive' : vm.isSectionSelected(section)}">
+              <h2 class="menu-heading" ng-if="section.type === 'heading'"
+                  id="heading_{{ section.name | nospace }}">
+                {{section}}
+              </h2>
+              <menu-link section="section" ng-if="section.type === 'link'"></menu-link>
+              <menu-toggle section="section" ng-if="section.type === 'toggle'"></menu-toggle>
+            </li>
+          </ul>
+        </md-content>
+    </md-sidenav>
+
+    <div layout="column" flex class="flex layout layout-column workbook-content">
+        <md-toolbar class="workbook-content-toolbar md-whiteframe-glow-z1 md-default-theme">
+          <div class="md-toolbar-tools">
+            <h1>Geoshape</h1>
+          </div>
+        </md-toolbar>
+        <md-content ui-view md-scroll-y class="flex md-default-theme workbook-content-container"></md-content>
+    </div>
+
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/elasticsearch/elasticsearch.js"></script>
+    <script src="bower_components/highlightjs/highlight.pack.js"></script>
+    <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
+    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <script src="bower_components/elasticsearch/elasticsearch.angular.js"></script>
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <!-- endbuild -->
+
+    <script src="scripts/workbook/workbook-filters.js"></script>
+    <script src="scripts/workbook/workbook-controllers.js"></script>
+
+    <script src="scripts/workbook/elasticsearch/elasticsearch-factories.js"></script>
+    <script src="scripts/workbook/elasticsearch/elasticsearch.js"></script>
+
+    <script src="scripts/workbook/menu/menu-directives.js"></script>
+    <script src="scripts/workbook/menu/menu-factories.js"></script>
+    <script src="scripts/workbook/menu/menu.js"></script>
+
+    <script src="scripts/demos/geoshapes/geoshapes.js"></script>
+    <script src="scripts/demos/demos.js"></script>
+</body>
+</html>
