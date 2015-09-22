@@ -1,0 +1,19 @@
+<div class="demo geoshape">
+  <div class="map" polygon-map></div>
+  <md-progress-circular md-mode="indeterminate" ng-if="esClient.busy"></md-progress-circular>
+  <div layout="column" infinite-scroll-container='".workbook-content-container"' infinite-scroll='esClient.nextPage(geoshapeRequest)' infinite-scroll-disabled='esClient.busy' infinite-scroll-distance='1'>
+    <md-subheader class="md-primary" ng-if="esClient.response">Results</md-subheader>
+      <md-list class="result-items">
+        <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
+          <div class="md-list-item-text">
+            <md-card>
+              <md-card-content>
+                <h2 class="md-title">{{ result._source['Vehicle 1 description'] }} Vs {{ result._source['Vehicle 2 description'] }}</h2>
+                <p>{{ result._source.fullAddress }} {{ result._source.timestamp }}</p>
+              </md-card-content>
+            </md-card>
+          </div>
+        </md-list-item>
+      </md-list>
+  </div>
+</div>

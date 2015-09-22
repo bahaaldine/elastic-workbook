@@ -56,6 +56,6 @@ angular.module('workbook.controllers', [])
     }
 
     $scope.vm = vm;
-    
+    $scope.$state = $state;
   }]);
 })();

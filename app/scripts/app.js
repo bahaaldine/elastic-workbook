@@ -34,17 +34,85 @@ angular
 
       $stateProvider
         .state('home', {
-          url: '/'
+          url: '/',
+          title: 'Getting started'
         })
         .state('home.demos', {
-          url: '/',
+          url: '/demos',
           abstract: true
         })
-        .state('home.demos.geoshapes', {
-          url: '/demos/geoshapes',
+        .state('home.demos.text', {
+          url: '/demos/text',
+          abstract: true
+        })
+        .state('home.demos.text.fulltextsearch', {
+          url: '/demos/text/fulltextsearch',
+          title: 'Full text search demo',
+          views: {
+            '@': {
+              templateUrl: 'views/demos/fulltextsearch/index.html'
+            }
+          }
+        })
+        .state('home.demos.text.fuzzysearch', {
+          url: '/demos/text/fuzzysearch',
+          title: 'Fuzzy search demo',
+          views: {
+            '@': {
+              templateUrl: 'views/demos/fuzzysearch/index.html'
+            }
+          }
+        })
+        .state('home.demos.text.typeahead', {
+          url: '/demos/text/typeahead',
+          title: 'Type ahead demo',
+          views: {
+            '@': {
+              templateUrl: 'views/demos/typeahead/index.html'
+            }
+          }
+        })
+        .state('home.demos.text.didyoumean', {
+          url: '/demos/text/didyoumean',
+          title: 'Did you mean demo',
+          views: {
+            '@': {
+              templateUrl: 'views/demos/didyoumean/index.html'
+            }
+          }
+        })
+        .state('home.demos.geo', {
+          url: '/demos/geo',
+          abstract: true
+        })
+        .state('home.demos.geo.geoshapes', {
+          url: '/demos/geo/geoshapes',
+          title: 'Geoshapes demo',
           views: {
             '@': {
               templateUrl: 'views/demos/geoshapes/index.html'
+            }
+          }
+        })
+        .state('home.demos.geo.dragthemap', {
+          url: '/demos/geo/dragthemap',
+          title: 'Drag the map demo',
+          views: {
+            '@': {
+              templateUrl: 'views/demos/dragthemap/index.html'
+            }
+          }
+        })
+        .state('home.demos.faceted', {
+          url: '/demos/faceted',
+          abstract: true
+        })
+        .state('home.demos.faceted.simpleaggregation', {
+          url: '/demos/faceted/simpleaggregation',
+          title: 'Simple aggregation demo',
+          views: {
+            '@': {
+              templateUrl: 'views/demos/simpleaggregation/index.html'
             }
           }
         })
