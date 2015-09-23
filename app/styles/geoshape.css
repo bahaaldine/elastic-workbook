@@ -7,3 +7,9 @@
 	height: 300px;
 	margin: 0 auto;
 }
+
+#tab-content-0 > div > md-content > h2 {
+	margin: 0;
+	text-align: right;
+	padding: 0px 30px;
+}

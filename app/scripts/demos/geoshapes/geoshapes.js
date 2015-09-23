@@ -1,3 +1,4 @@
+(function () {
 'use strict';
 
 angular.module('workbook.demos.geoshapes', [])
@@ -108,3 +109,4 @@ angular.module('workbook.demos.geoshapes', [])
 		}
 	}
 }]);
+})();

@@ -21,6 +21,7 @@ angular
     'infinite-scroll',
     'elasticsearch',
     'hljs',
+    'ngOdometer',
     'workbook.controllers',
     'workbook.filters',
     'workbook.elasticsearch',
@@ -116,4 +117,16 @@ angular
             }
           }
         })
+    }])
+    .config(['$mdThemingProvider', function($mdThemingProvider) {
+      // Extend the red theme with a few different colors
+      var elastic = $mdThemingProvider.extendPalette('teal', {
+        '500': '39bdb1'
+      });
+
+      $mdThemingProvider.definePalette('elastic', elastic);
+
+      $mdThemingProvider.theme('default')
+        .primaryPalette('elastic')
+        .accentPalette('amber');
     }]);

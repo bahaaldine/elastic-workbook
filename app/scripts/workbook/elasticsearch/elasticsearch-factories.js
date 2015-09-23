@@ -15,6 +15,8 @@ angular.module('workbook.elasticsearch.factories', [])
   };
 
   ESClient.prototype.nextPage = function(request) {
+    this.request = request;
+
     if ( !angular.isDefined(this.response) ) {
       this.response = [];
     }
@@ -35,6 +37,7 @@ angular.module('workbook.elasticsearch.factories', [])
       this.more = this.pageSize === resp.hits.hits.length;
       this.response = this.response.concat(resp.hits.hits);
       this.busy = false;
+      this.total = resp.hits.total;
     }.bind(this), function (err) {
       console.trace(err.message);
     });

@@ -341,7 +341,8 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
+            'views/**/{,*/}*.html',
+            'partials/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'styles/fonts/{,*/}*.*'
           ]
@@ -357,6 +358,19 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      fonts: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/bower_components/font-awesome/',
+          dest: '<%= yeoman.dist %>',
+          src: 'fonts/*'
+        },{
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: 'fonts/*'
+        }]
       }
     },
 
@@ -370,6 +384,7 @@ module.exports = function (grunt) {
       ],
       dist: [
         'copy:styles',
+        'copy:fonts',
         'imagemin',
         'svgmin'
       ]
@@ -423,7 +438,7 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
+    //'cdnify',
     'cssmin',
     'uglify',
     'filerev',
@@ -433,7 +448,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
     'build'
   ]);
 };

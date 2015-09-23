@@ -2,6 +2,23 @@ body {
 	font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+h2, h3 {
+	font-weight: 500;
+	letter-spacing: 0.005em;
+	color: #39bdb1;
+}
+
+md-card > md-card-content > h2 {
+	margin-top: 0px;
+}
+
+p {
+  font-weight: 400;
+  letter-spacing: 0.010em;
+  line-height: 1.6em;
+  margin: 0.8em 0 1.6em;
+}
+
 body > .workbook-sidenav {
 	width: 200px;
 	min-width: 256px;
@@ -96,4 +113,8 @@ body > .workbook-content>.workbook-content-toolbar {
   box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
               0px 0px 2px 2px rgba(0, 0, 0, 0.098),
               0px 0px 5px 1px rgba(0, 0, 0, 0.084);
+}
+
+.md-subheader.md-primary {
+  color: #39bdb1;
 }
