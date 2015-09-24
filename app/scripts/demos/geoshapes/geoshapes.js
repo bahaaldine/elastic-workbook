@@ -81,7 +81,7 @@ angular.module('workbook.demos.geoshapes', [])
 			$scope.$watch("edges", function(edges) {
 		  	if ( angular.isDefined($scope.edges) ) {
 					$scope.esClient = new ESClient(10, 0);
-			  	$scope.geoshapeRequest = {
+			  	$scope.request = {
 					  index: 'accident*',
 					  type: 'accident',
 					  body: {
@@ -104,7 +104,7 @@ angular.module('workbook.demos.geoshapes', [])
 					  }
 					};
 
-					$scope.esClient.nextPage($scope.geoshapeRequest);
+					$scope.esClient.nextPage($scope.request);
 				}
 		  }, true);
 		}

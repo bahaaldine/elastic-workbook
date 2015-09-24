@@ -1,8 +1,19 @@
-<div class="demo geoshape">
+<div class="demo geo geoshape">
   <div layout="column">
     <md-content class="md-default-theme" layout-padding>
-      <h3>Description</h3>
-      <p>This demo lets you draw a shape on the map that triggers a polygon search in Elasticsearch</p>
+      <div layout="row" layout-align="end end">
+        <div flex="80">
+          <p>
+            <h3>Description</h3>
+            <br />This demos let you search data in Elasticsearch based on polygon shapes you draw on the map.
+            <br />The polygon needs at least 2 edges in order to trigger the search.
+            <br />Start drawing your polygon by <b>clicking on the map !</b>
+          </p>
+        </div>
+        <div flex="20">
+          <md-button href="https://www.elastic.co/guide/en/elasticsearch/reference/2.0/query-dsl-geo-polygon-query.html#query-dsl-geo-polygon-query" target="_blank" md-autofocus>Open documentation</md-button> 
+        </div>
+      </div>
     </md-content>
   </div>
   <div class="map" polygon-map></div>
@@ -10,8 +21,10 @@
   <div layout="column" ng-if="esClient.response">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Resuts">
-        <md-content class="md-padding" infinite-scroll-container='".workbook-content-container"' infinite-scroll='esClient.nextPage(geoshapeRequest)' infinite-scroll-disabled='esClient.busy' infinite-scroll-distance='1'>
-          <h2><span>hits</span>: <span><ng-odometer value="esClient.total"></ng-odometer></span></h2>
+        <md-content class="md-padding" infinite-scroll-container='".workbook-content-container"' infinite-scroll='esClient.nextPage(request)' infinite-scroll-disabled='esClient.busy' infinite-scroll-distance='1'>
+          <div layout="row" layout-align="end center">
+            <h2><span>hits</span>: <span><ng-odometer value="esClient.total"></ng-odometer></span></h2>
+          </div>
           <md-list class="result-items">
             <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
               <div class="md-list-item-text">
@@ -27,14 +40,10 @@
         </md-content>
       </md-tab>
       <md-tab label="Request">
-        <md-content class="md-padding">
-          {{esClient.request}}
-        </md-content>
+        <md-content class="md-padding" hljs source="toPrettyJSON(esClient.request, 2)"></md-content>
       </md-tab>
       <md-tab label="Response">
-        <md-content class="md-padding">
-          {{esClient.response}}
-        </md-content>
+        <md-content class="md-padding" hljs source="toPrettyJSON(esClient.response.slice(0, 4), 2)"></md-content>
       </md-tab>
     </md-tabs>
   </div>

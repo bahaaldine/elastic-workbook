@@ -15,32 +15,34 @@ angular.module('workbook.elasticsearch.factories', [])
   };
 
   ESClient.prototype.nextPage = function(request) {
-    this.request = request;
+    if ( angular.isDefined(request) ) {
+      this.request = request;
 
-    if ( !angular.isDefined(this.response) ) {
-      this.response = [];
+      if ( !angular.isDefined(this.response) ) {
+        this.response = [];
+      }
+
+      if (this.busy || !this.more) {return;}
+      this.busy = true;
+
+      if ( angular.isDefined(this.from) ) {
+        request.body.from = this.from;
+      }
+
+      if ( angular.isDefined(this.pageSize) ) {
+        request.body.size = this.pageSize;
+      }
+
+      es.search(request).then(function (resp) {
+        this.from += resp.hits.hits.length - 1;
+        this.more = this.pageSize === resp.hits.hits.length;
+        this.response = this.response.concat(resp.hits.hits);
+        this.busy = false;
+        this.total = resp.hits.total;
+      }.bind(this), function (err) {
+        console.trace(err.message);
+      });
     }
-
-    if (this.busy || !this.more) {return;}
-    this.busy = true;
-
-    if ( angular.isDefined(this.from) ) {
-      request.body.from = this.from;
-    }
-
-    if ( angular.isDefined(this.pageSize) ) {
-      request.body.size = this.pageSize;
-    }
-
-    es.search(request).then(function (resp) {
-      this.from += resp.hits.hits.length - 1;
-      this.more = this.pageSize === resp.hits.hits.length;
-      this.response = this.response.concat(resp.hits.hits);
-      this.busy = false;
-      this.total = resp.hits.total;
-    }.bind(this), function (err) {
-      console.trace(err.message);
-    });
   };
 
   return ESClient;
