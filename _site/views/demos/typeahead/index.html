@@ -1,0 +1,72 @@
+<div class="demo text typeahead" ng-controller="typeAheadCtrl as ctrl">
+  <div layout="column">
+      <md-content class="md-default-theme" layout-padding>
+      <div layout="row" layout-align="end end">
+        <div flex="80">
+          <p>
+            <h3>Description</h3>
+            <br />This demos showcases the query as you type feature of Elasticsearch.
+            <br />It's a common functionality that you find on most of website.
+            <br />Start <b>typing an address</b> to trigger the search !
+          </p>
+        </div>
+        <div flex="20">
+          <md-button href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_query_time_search_as_you_type.html#_query_time_search_as_you_type" target="_blank" md-autofocus>Open documentation</md-button> 
+        </div>
+      </div>
+    </md-content>
+  </div>
+
+  <div class="typeahead">
+     <md-content class="md-padding">
+      <form ng-submit="$event.preventDefault()">
+        <md-autocomplete 
+          md-selected-item-change="ctrl.querySearch(item.value)" 
+          md-search-text="ctrl.searchText" 
+          md-items="item in ctrl.querySearch(ctrl.searchText)" 
+          md-item-text="item.display" 
+          md-min-length="0" 
+          placeholder="Start typing an address">
+          <md-item-template>
+            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found for "{{ctrl.searchText}}".
+          </md-not-found>
+        </md-autocomplete>
+        <br>
+      </form>
+    </md-content>
+  </div>
+
+  <md-progress-linear md-mode="indeterminate" ng-if="esClient.busy"></md-progress-linear>
+  <div layout="column" ng-if="esClient.response">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Resuts">
+        <md-content class="md-padding" infinite-scroll-container='".workbook-content-container"' infinite-scroll='esClient.nextPage(request)' infinite-scroll-disabled='esClient.busy' infinite-scroll-distance='1'>
+          <div layout="row" layout-align="end center">
+            <h2><span>hits</span>: <span><ng-odometer value="esClient.total"></ng-odometer></span></h2>
+          </div>
+          <md-list class="result-items">
+            <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
+              <div class="md-list-item-text">
+                <md-card>
+                  <md-card-content>
+                    <h2 class="md-title">[{{$index + 1}}] {{ result.fields['Vehicle 1 description'][0] }} <span ng-if="result._source['Vehicle 2 description']">&</span> {{ result.fields['Vehicle 2 description'][0] }}</h2>
+                    <p>{{ result.fields.fullAddress[0] }} {{ result.fields.timestamp[0] }}</p>
+                  </md-card-content>
+                </md-card>
+              </div>
+            </md-list-item>
+          </md-list>
+        </md-content>
+      </md-tab>
+      <md-tab label="Request">
+        <md-content class="md-padding" hljs source="toPrettyJSON(esClient.request, 2)"></md-content>
+      </md-tab>
+      <md-tab label="Response">
+        <md-content class="md-padding" hljs source="toPrettyJSON(esClient.response.slice(0, 4), 2)"></md-content>
+      </md-tab>
+    </md-tabs>
+  </div>
+</div>

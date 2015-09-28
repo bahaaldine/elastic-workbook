@@ -16,6 +16,8 @@ angular.module('workbook.elasticsearch.factories', [])
 
   ESClient.prototype.nextPage = function(request) {
     if ( angular.isDefined(request) ) {
+      var deferred = $q.defer();
+
       this.request = request;
 
       if ( !angular.isDefined(this.response) ) {
@@ -39,9 +41,13 @@ angular.module('workbook.elasticsearch.factories', [])
         this.response = this.response.concat(resp.hits.hits);
         this.busy = false;
         this.total = resp.hits.total;
+        deferred.resolve(this);
       }.bind(this), function (err) {
         console.trace(err.message);
+        deferred.reject(err);
       });
+
+      return deferred.promise;
     }
   };
 
