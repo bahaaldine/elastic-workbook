@@ -7,3 +7,7 @@
 	height: 500px;
 	margin: 0 auto;
 }
+
+md-content > div > h2 {
+	margin: 0;
+}
