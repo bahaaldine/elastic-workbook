@@ -15,6 +15,7 @@ angular.module('workbook.elasticsearch.factories', [])
   };
 
   ESClient.prototype.nextPage = function(request) {
+
     if ( angular.isDefined(request) ) {
       var deferred = $q.defer();
 

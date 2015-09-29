@@ -1,27 +1,63 @@
-<div class="demo geo dragthemap">
+<div class="demo text fulltextsearch" ng-controller="fullTextSearchCtrl as ctrl">
   <div layout="column">
       <md-content class="md-default-theme" layout-padding>
       <div layout="row" layout-align="end end">
         <div flex="80">
           <p>
             <h3>Description</h3>
-            <br />This demos let you search data in Elasticsearch by dragging the map.
-            <br />The bounding box, which basically is the map viewport changes when the map is dragged.
-            <br />Start searching by <b>dragging the map !</b>
+            <br />This demos showcases the query as you type feature of Elasticsearch.
+            <br />It's a common functionality that you find on most of website.
+            <br />Start <b>typing an address</b> to trigger the search !
           </p>
         </div>
         <div flex="20">
-          <md-button href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-bounding-box-filter.html#_lat_lon_as_array_3" target="_blank" md-autofocus>Open documentation</md-button> 
+          <md-button href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_query_time_search_as_you_type.html#_query_time_search_as_you_type" target="_blank" md-autofocus>Open documentation</md-button> 
         </div>
       </div>
     </md-content>
   </div>
-  <div class="text-input" full-text-search></div>
+
+  <div class="fulltextsearch">
+     <md-content class="md-padding">
+      <form ng-submit="$event.preventDefault()">
+        <md-autocomplete 
+          md-selected-item-change="ctrl.querySearch(item.value)" 
+          md-search-text="ctrl.searchText" 
+          md-items="item in ctrl.querySearch(ctrl.searchText)" 
+          md-item-text="item.display" 
+          md-min-length="0" 
+          placeholder="Start typing an address">
+          <md-item-template>
+            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found for "{{ctrl.searchText}}".
+          </md-not-found>
+        </md-autocomplete>
+        <br>
+      </form>
+      <div layout="">
+        <div flex="10" layout="" layout-align="center center">
+          <span class="md-body-1">Vehicule 1</span>
+        </div>
+        <md-slider flex="" class="md-primary" md-discrete="" ng-model="vOneBoost" step="1" min="1" max="10" aria-label="rating">
+        </md-slider>
+      </div>
+      <div layout="">
+        <div flex="10" layout="" layout-align="center center">
+          <span class="md-body-1">Vehicule 2</span>
+        </div>
+        <md-slider flex="" class="md-primary" md-discrete="" ng-model="vTwoBoost" step="1" min="1" max="10" aria-label="rating">
+        </md-slider>
+      </div>
+    </md-content>
+  </div>
+
   <md-progress-linear md-mode="indeterminate" ng-if="esClient.busy"></md-progress-linear>
   <div layout="column" ng-if="esClient.response">
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="Resuts">
-        <md-content class="md-padding">
+        <md-content class="md-padding" infinite-scroll-container='".workbook-content-container"' infinite-scroll='esClient.nextPage(request)' infinite-scroll-disabled='esClient.busy' infinite-scroll-distance='1'>
           <div layout="row" layout-align="end center">
             <h2><span>hits</span>: <span><ng-odometer value="esClient.total"></ng-odometer></span></h2>
           </div>
@@ -30,8 +66,8 @@
               <div class="md-list-item-text">
                 <md-card>
                   <md-card-content>
-                    <h2 class="md-title">[{{$index + 1}}] {{ result._source['Vehicle 1 description'] }} <span ng-if="result._source['Vehicle 2 description']">&</span> {{ result._source['Vehicle 2 description'] }}</h2>
-                    <p>{{ result._source.fullAddress }} {{ result._source.timestamp }}</p>
+                    <h2 class="md-title">[{{$index + 1}}] {{ result.fields['Vehicle 1 description'][0] }} <span ng-if="result.fields['Vehicle 2 Description']"> & </span> {{ result.fields['Vehicle 2 Description'][0] }}</h2>
+                    <p>{{ result.fields.fullAddress[0] }} {{ result.fields.timestamp[0] }}</p>
                   </md-card-content>
                 </md-card>
               </div>
