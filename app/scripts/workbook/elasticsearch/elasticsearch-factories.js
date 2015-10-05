@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('workbook.elasticsearch.factories', [])
-.service('es', function (esFactory) {
+.service('es', [ '$location', 'esFactory', function ($location, esFactory) {
+
   return esFactory({
-    host: 'bahaaldine:bazarmi@localhost:9200',
+    host: 'bahaaldine:bazarmi@'+$location.$$host+':9200',
     log: 'warning'
   });
-})
+}])
 .factory('ESClient', ['$q', 'es', function($q, es) {
   var ESClient = function(pageSize, from) {
     this.pageSize = pageSize;

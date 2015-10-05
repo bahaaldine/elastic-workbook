@@ -11,7 +11,6 @@ angular.module('workbook.demos.fulltextsearch', [])
     $scope.vTwoBoost = 1;
 
     $scope.$watch('vOneBoost', function(boost){
-      console.log(boost)
       if ( angular.isDefined( $scope.request ) ) {
         $scope.request.body.query.bool.should[1].match["Vehicle 1 description"].boost = boost;
         querySearch($scope.request.body.query.bool.should[1].match["Vehicle 1 description"].query);
