@@ -14,6 +14,7 @@ angular
     'ngCookies',
     'ngResource',
     'ui.router',
+    'ngMessages',
     'ngSanitize',
     'ngTouch', 
     'ngMaterial',
@@ -26,7 +27,9 @@ angular
     'workbook.filters',
     'workbook.elasticsearch',
     'workbook.menu',
-    'workbook.demos'
+    'workbook.wizard',
+    'workbook.home',
+    'workbook.faces'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$logProvider',
     function ($stateProvider, $urlRouterProvider) {
@@ -36,18 +39,96 @@ angular
       $stateProvider
         .state('home', {
           url: '/',
-          title: 'Getting started'
+          title: 'Getting started',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/home.html'
+            }
+          }
+        })
+        .state('home.wizard', {
+          url: 'wizard',
+          title: 'Wizard',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/wizard.html'
+            }
+          }
+        })
+        .state('home.face', {
+          url: 'face',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/face.html'
+            }
+          },
+          hide: {
+            sidenav: true,
+            toolbar: true
+          }
+        })
+        .state('home.face.search', {
+          url: '/search',
+          title: 'search',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/face-search.html'
+            }
+          },
+          hide: {
+            sidenav: true,
+            toolbar: true
+          }
+        })
+        .state('home.face.map', {
+          url: '/map',
+          title: 'map',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/face-map.html'
+            }
+          },
+          hide: {
+            sidenav: true,
+            toolbar: true
+          }
+        })
+        .state('home.face.analytics', {
+          url: '/analytics',
+          title: 'analytics',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/face-analytics.html'
+            }
+          },
+          hide: {
+            sidenav: true,
+            toolbar: true
+          }
+        })
+        .state('home.settings', {
+          url: 'settings',
+          title: 'settings',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/settings.html'
+            }
+          },
+          hide: {
+            sidenav: true,
+            toolbar: true
+          }
         })
         .state('home.demos', {
-          url: '/demos',
+          url: 'demos',
           abstract: true
         })
         .state('home.demos.text', {
-          url: '/demos/text',
+          url: '/text',
           abstract: true
         })
         .state('home.demos.text.fulltextsearch', {
-          url: '/demos/text/fulltextsearch',
+          url: '/fulltextsearch',
           title: 'Full text search demo',
           views: {
             '@': {
@@ -56,7 +137,7 @@ angular
           }
         })
         .state('home.demos.text.fuzzysearch', {
-          url: '/demos/text/fuzzysearch',
+          url: '/fuzzysearch',
           title: 'Fuzzy search demo',
           views: {
             '@': {
@@ -65,7 +146,7 @@ angular
           }
         })
         .state('home.demos.text.typeahead', {
-          url: '/demos/text/typeahead',
+          url: '/typeahead',
           title: 'Type ahead demo',
           views: {
             '@': {
@@ -74,7 +155,7 @@ angular
           }
         })
         .state('home.demos.text.didyoumean', {
-          url: '/demos/text/didyoumean',
+          url: '/didyoumean',
           title: 'Did you mean demo',
           views: {
             '@': {
@@ -83,11 +164,11 @@ angular
           }
         })
         .state('home.demos.geo', {
-          url: '/demos/geo',
+          url: '/geo',
           abstract: true
         })
         .state('home.demos.geo.geoshapes', {
-          url: '/demos/geo/geoshapes',
+          url: '/geoshapes',
           title: 'Geoshapes demo',
           views: {
             '@': {
@@ -96,7 +177,7 @@ angular
           }
         })
         .state('home.demos.geo.dragthemap', {
-          url: '/demos/geo/dragthemap',
+          url: '/dragthemap',
           title: 'Drag the map demo',
           views: {
             '@': {
@@ -105,11 +186,11 @@ angular
           }
         })
         .state('home.demos.faceted', {
-          url: '/demos/faceted',
+          url: '/faceted',
           abstract: true
         })
         .state('home.demos.faceted.simpleaggregation', {
-          url: '/demos/faceted/simpleaggregation',
+          url: '/simpleaggregation',
           title: 'Simple aggregation demo',
           views: {
             '@': {
@@ -129,4 +210,6 @@ angular
       $mdThemingProvider.theme('default')
         .primaryPalette('elastic')
         .accentPalette('amber');
+
+      $mdThemingProvider.theme("error-toast");
     }]);

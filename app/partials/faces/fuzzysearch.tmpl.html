@@ -2,21 +2,17 @@
   <div layout="column">
       <md-content class="md-default-theme" layout-padding>
       <div layout="row" layout-align="end end">
-        <div flex="80">
-          <p>
-            <h3>Description</h3>
-            <br />This demos showcases the fuzzysearch query feature of Elasticsearch.
-            <br />Start <b>typing an address</b> to trigger the search !
-          </p>
+        <div flex="80" ng-if="component.show.description">
+          <p ng-bind-html="component.componentDescription"></p>
         </div>
-        <div flex="20">
-          <md-button href="https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzzy-match-query.html#fuzzy-match-query" target="_blank" md-autofocus>Open documentation</md-button> 
+        <div flex="20" ng-if="component.show.documentationLink">
+          <md-button href="{{component.documentationLink}}" target="_blank" md-autofocus>Open documentation</md-button> 
         </div>
       </div>
     </md-content>
   </div>
 
-  <div class="fuzzysearch">
+  <div class="feature-fuzzysearch">
      <md-content class="md-padding">
       <form ng-submit="$event.preventDefault()">
         <md-autocomplete 
@@ -49,17 +45,17 @@
           <md-list class="result-items">
             <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
               <div class="md-list-item-text">
-                <h2 class="md-title">[{{$index + 1}}] {{ result.fields['Vehicle 1 description'][0] }} <span ng-if="result._source['Vehicle 2 Description']">&</span> {{ result.fields['Vehicle 2 Description'][0] }}</h2>
-                <p>{{ result.fields.fullAddress[0] }} {{ result.fields.timestamp[0] }}</p>
+                <h2 class="md-title">{{ ctrl.getComponentResultTitle($index) }}</h2>
+                <p>{{ ctrl.getComponentResultDescription($index) }}</p>
               </div>
             </md-list-item>
           </md-list>
         </md-content>
       </md-tab>
-      <md-tab label="Request">
+      <md-tab label="Request" ng-if="component.show.request">
         <md-content class="md-padding" hljs source="toPrettyJSON(esClient.request, 2)"></md-content>
       </md-tab>
-      <md-tab label="Response">
+      <md-tab label="Response" ng-if="component.show.response">
         <md-content class="md-padding" hljs source="toPrettyJSON(esClient.response.slice(0, 4), 2)"></md-content>
       </md-tab>
     </md-tabs>

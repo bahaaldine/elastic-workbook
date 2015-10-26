@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="styles/workbook.css"> 
     <!-- endbuild -->
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
     <script src="http://maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&libraries=drawing"></script>
   </head>
   <body ng-app="workbookApp" ng-controller="workbookCtrl" layout="row" class="layout layout-row">
@@ -27,9 +30,17 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <md-sidenav class="workbook-sidenav" layout="column" md-component-id="left" md-is-locked-open="true">
-        <header class="nav-header"><img src="images/logo-wireframe.png" alt=""></header>
-        <h1 class="docs-logotype md-heading">Elastic Workbook</h1>
+    <md-sidenav ng-hide="$state.current.hide.sidenav" class="workbook-sidenav" layout="column" md-component-id="left" md-is-locked-open="true">
+        <md-toolbar class="layout layout-row">
+            <div class="md-toolbar-tools">
+                <div class="md-toolbar-item" flex="30" flex><img src="images/logo-wireframe.png" alt=""></div>
+                <div class="md-toolbar-item"><h1 flex="70" flex>Faces</h1></div>
+            </div>
+        </md-toolbar>
+
+        <md-toolbar style="height:100px;" class="md-primary md-hue-2">
+        </md-toolbar>
+
         <md-content class="workbook-sidenav-content" flex="" role="navigation" class="flex md-default-theme">
           <ul class="side-menu">
             <li ng-repeat="section in vm.menu.sections" class="parent-list-item"
@@ -46,11 +57,17 @@
     </md-sidenav>
 
     <div layout="column" flex class="flex layout layout-column workbook-content">
-        <md-toolbar class="workbook-content-toolbar md-whiteframe-glow-z1 md-default-theme">
+        <md-toolbar ng-hide="$state.current.hide.toolbar" layout="row" class="workbook-content-toolbar md-whiteframe-glow-z1 md-default-theme">
           <div class="md-toolbar-tools">
-            <h1>{{$state.current.title}}</h1>
+            <h1 flex="80">{{$state.current.title}}</h1>
+            <div flex="20" class="md-toolbar-item layout-row">
+              <md-button class="md-raised md-primary" 
+                aria-label="Create new face"
+                ng-click="openCreateFaceWizard($event)">Create new Face</md-button>
+            </div>
           </div>
         </md-toolbar>
+
         <md-content ui-view md-scroll-y class="flex md-default-theme workbook-content-container"></md-content>
     </div>
 
@@ -76,6 +93,7 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/odometer/odometer.min.js"></script>
     <script src="bower_components/angular-odometer/dist/angular-odometer.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -91,12 +109,28 @@
     <script src="scripts/workbook/menu/menu-factories.js"></script>
     <script src="scripts/workbook/menu/menu.js"></script>
 
-    <script src="scripts/demos/geoshapes/geoshapes.js"></script>
-    <script src="scripts/demos/dragthemap/dragthemap.js"></script>
-    <script src="scripts/demos/fulltextsearch/fulltextsearch.js"></script>
-    <script src="scripts/demos/typeahead/typeahead.js"></script>
-    <script src="scripts/demos/fuzzysearch/fuzzysearch.js"></script>
-    <script src="scripts/demos/demos.js"></script>
+    <script src="scripts/workbook/wizard/wizard-directives.js"></script>
+    <script src="scripts/workbook/wizard/wizard-controllers.js"></script>
+    <script src="scripts/workbook/wizard/wizard.js"></script>
+
+    <script src="scripts/workbook/home/home-controller.js"></script>
+    <script src="scripts/workbook/home/home.js"></script>
+
+    <script src="scripts/faces/dragthemap/dragthemap.js"></script>
+    <script src="scripts/faces/fulltextsearch/fulltextsearch.js"></script>
+    <script src="scripts/faces/typeahead/typeahead.js"></script>
+
+    <script src="scripts/faces/geoshapes/geoshapes-controller.js"></script>
+    <script src="scripts/faces/geoshapes/geoshapes-directive.js"></script>
+    <script src="scripts/faces/geoshapes/geoshapes.js"></script>
+    
+    <script src="scripts/faces/fuzzysearch/fuzzysearch-controller.js"></script>
+    <script src="scripts/faces/fuzzysearch/fuzzysearch-directive.js"></script>
+    <script src="scripts/faces/fuzzysearch/fuzzysearch.js"></script>
+    
+    <script src="scripts/faces/faces-controllers.js"></script>
+    <script src="scripts/faces/faces-directives.js"></script>
+    <script src="scripts/faces/faces.js"></script>
     <!-- endbuild -->
 </body>
 </html>

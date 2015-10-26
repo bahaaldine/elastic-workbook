@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('workbook.demos.dragthemap', [])
+angular.module('workbook.faces.dragthemap', [])
 .directive('dragTheMap', ['ESClient', '$parse', function(ESClient, $parse) {
 	return {
 		restrict: 'EA',

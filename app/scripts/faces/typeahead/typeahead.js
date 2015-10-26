@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('workbook.demos.typeahead', [])
+angular.module('workbook.faces.typeahead', [])
 .controller('typeAheadCtrl', ['$scope', 'ESClient', '$parse', '$timeout', '$q', '$log',
   function ($scope, ESClient, $parse, $timeout, $q, $log) {
     var self = this;

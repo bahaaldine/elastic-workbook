@@ -1,0 +1,25 @@
+<ng-form name="faceForm">
+<div layout="column" class="md-padding wizard-step">
+  <md-content> 
+    <div layout="row" layout-align="start center">
+      <h4>Face indices</h4>
+    </div>
+    <md-input-container>
+      <label>Filter index by name ({{wizard.indices.available.length}} indices)</label>
+      <input ng-model="indexFilter" />
+    </md-input-container>
+
+    <md-content class="md-padding step-repeated-content">
+      <md-input-container>
+        <md-grid-list class="step-repeated-content" md-cols-gt-md="12" md-cols-sm="3" md-cols-md="8" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px" class="result-items">
+          <md-grid-tile class="gray" md-rowspan="1" md-colspan="4" md-colspan-sm="1"
+               ng-repeat="result in wizard.indices.available | filter:indexFilter ">
+            <md-checkbox name="faceIndices" ng-model="wizard.indices.isSelected[result]" ng-change="toggleIndex(result)"/>{{result}}
+          </md-grid-tile>
+        </md-grid-list>
+      </md-input-container>
+    </md-content>
+
+  </md-content>
+</div>
+</ng-form>

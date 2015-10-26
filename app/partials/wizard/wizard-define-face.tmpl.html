@@ -1,0 +1,30 @@
+<ng-form name="faceForm">
+<div layout="column" class="md-padding wizard-step">
+  <md-content>
+    <div layout="row" layout-align="start center">
+      <h4>Face name</h4>
+    </div>
+    <md-input-container>
+      <label>Name the face</label>
+      <input name="faceName" required ng-model="wizard.name" />
+    </md-input-container>
+  </md-content>
+
+  <md-content>
+    <div layout="row" layout-align="start center">
+      <h4>Face type</h4>
+    </div>
+    <md-input-container>
+      <md-radio-group name="faceType" ng-model="wizard.faces.selected" >
+        <div ng-repeat='face in wizard.faces.available' class="row">
+          <div flex layout="row" layout-padding layout-align="start center" >
+            <md-radio-button required layout="row" flex ng-value="face" class="md-primary">
+              <div tyle="max-width:200px;">{{face.name}}</div>
+            </md-radio-button>
+          </div>
+        </div>
+      </md-radio-group>
+    </md-input-container>
+  </md-content>
+</div>
+</ng-form>

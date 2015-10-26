@@ -3,11 +3,28 @@
 angular.module('workbook.menu.factories', [])
 .factory('menu', ['$location', function ($location) {
   
-  var sections = [{
-    name: 'Getting Started',
-    state: 'home',
+  var sections = [];
+
+  sections.push({
+    name: 'Search faces',
+    state: 'home.face.search',
     type: 'link'
-  }];
+  },
+  {
+    name: 'Map faces',
+    state: 'home.face.map',
+    type: 'link'
+  },
+  {
+    name: 'Analytic faces',
+    state: 'home.face.analytics',
+    type: 'link'
+  },
+  {
+    name: 'Settings',
+    state: 'home.settings',
+    type: 'link'
+  });
 
   sections.push({
     name: 'Text search',

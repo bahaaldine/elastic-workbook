@@ -39,6 +39,7 @@ module.exports = function(config) {
       'app/bower_components/angular-ui-router/release/angular-ui-router.js',
       'app/bower_components/odometer/odometer.min.js',
       'app/bower_components/angular-odometer/dist/angular-odometer.js',
+      'app/bower_components/angular-messages/angular-messages.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

@@ -1,0 +1,32 @@
+<ng-form name="faceForm">
+<div layout="column" class="md-padding wizard-step">
+  <md-content class="md-padding">
+    <div layout="row" layout-align="start center">
+      <h4>Layout</h4>
+    </div>
+    <md-content class="md-padding step-repeated-content">
+      <md-grid-list md-cols-gt-md="12" md-cols-sm="3" md-cols-md="8" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter-gt-md="16px" md-gutter-gt-sm="8px" md-gutter="4px" class="result-items">
+        <md-grid-tile class="gray" md-rowspan="1" md-colspan="4" md-colspan-sm="1">
+          <md-checkbox ng-model="wizard.show.description"/>Show Description
+        </md-grid-tile>
+        <md-grid-tile class="gray" md-rowspan="1" md-colspan="4" md-colspan-sm="1">
+          <md-checkbox ng-model="wizard.show.documentationLink"/>Show documentation
+        </md-grid-tile>
+        <md-grid-tile class="gray" md-rowspan="1" md-colspan="4" md-colspan-sm="1">
+          <md-checkbox ng-model="wizard.show.request"/>Show request
+        </md-grid-tile>
+        <md-grid-tile class="gray" md-rowspan="1" md-colspan="4" md-colspan-sm="1">
+          <md-checkbox ng-model="wizard.show.response"/>Show response
+        </md-grid-tile>
+      </md-grid-list>
+    </md-content>
+    <div layout>
+    <div flex="10" layout layout-align="center center">
+        <span class="md-body-1">Page size</span>
+      </div>
+      <md-slider flex class="md-primary" md-discrete ng-model="wizard.pageSize" step="10" min="10" max="100">
+      </md-slider>
+    </div>
+  </md-content>
+</div>
+</ng-form>

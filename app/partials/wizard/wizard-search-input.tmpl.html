@@ -1,0 +1,17 @@
+<ng-form name="faceForm">
+<div layout="column" class="md-padding wizard-step">
+  <md-content class="md-padding">
+    <div layout="row" layout-align="start center">
+      <h4>Search Input</h4>
+    </div>
+    <md-input-container flex>
+      <label>Select a field</label>
+      <md-select name="faceInput" ng-model="wizard.fields.input.selected">
+        <md-option 
+          ng-repeat="field in wizard.fields.available" 
+          ng-value="field">{{field.dot_path}}</md-option>
+      </md-select>
+    </md-input-container>
+  </md-content>
+</div>
+</ng-form>

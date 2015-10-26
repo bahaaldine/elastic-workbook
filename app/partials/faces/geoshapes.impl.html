@@ -1,38 +1,19 @@
-<div class="demo text fuzzysearch" ng-controller="fuzzySearchCtrl as ctrl">
+<div class="feature-geoshape">
+
   <div layout="column">
       <md-content class="md-default-theme" layout-padding>
       <div layout="row" layout-align="end end">
-        <div flex="80">
+        <div flex="80" ng-if="component.show.description">
           <p ng-bind-html="component.componentDescription"></p>
         </div>
-        <div flex="20">
+        <div flex="20" ng-if="component.show.documentationLink">
           <md-button href="{{component.documentationLink}}" target="_blank" md-autofocus>Open documentation</md-button> 
         </div>
       </div>
     </md-content>
   </div>
 
-  <div class="fuzzysearch">
-     <md-content class="md-padding">
-      <form ng-submit="$event.preventDefault()">
-        <md-autocomplete 
-          md-selected-item-change="ctrl.querySearch(item.value)" 
-          md-search-text="ctrl.searchText" 
-          md-items="item in ctrl.querySearch(ctrl.searchText)" 
-          md-item-text="item.display" 
-          md-min-length="0" 
-          placeholder="Start typing an address">
-          <md-item-template>
-            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
-          </md-item-template>
-          <md-not-found>
-            No matches found for "{{ctrl.searchText}}".
-          </md-not-found>
-        </md-autocomplete>
-        <br>
-      </form>
-    </md-content>
-  </div>
+  <div class="map" polygon-map></div>
 
   <md-progress-linear md-mode="indeterminate" ng-if="esClient.busy"></md-progress-linear>
   <div layout="column" ng-if="esClient.response">
@@ -52,10 +33,10 @@
           </md-list>
         </md-content>
       </md-tab>
-      <md-tab label="Request">
+      <md-tab label="Request" ng-if="component.show.request">
         <md-content class="md-padding" hljs source="toPrettyJSON(esClient.request, 2)"></md-content>
       </md-tab>
-      <md-tab label="Response">
+      <md-tab label="Response" ng-if="component.show.response">
         <md-content class="md-padding" hljs source="toPrettyJSON(esClient.response.slice(0, 4), 2)"></md-content>
       </md-tab>
     </md-tabs>

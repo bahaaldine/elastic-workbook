@@ -41,8 +41,8 @@ body > .workbook-sidenav>header {
   padding: 10px 0px;
 }
 
-body > .workbook-sidenav>header>img {
-	width: 120px;
+body > md-sidenav > md-toolbar > div > div.md-toolbar-item > img {
+	width: 40px;
 	display: block;
 }
 
@@ -117,4 +117,24 @@ body > .workbook-content>.workbook-content-toolbar {
 
 .md-subheader.md-primary {
   color: #39bdb1;
+}
+
+.wizard > .wizard-step .step-repeated-content {
+	height: 300px;
+}
+
+.wizard-step > md-content > md-content.step-repeated-type.md-default-theme > md-grid-list > md-grid-tile > figure > button {
+  width: 100%;
+  margin: 0;
+  height: 100%;
+}
+
+/** wizard directive **/
+/* face definition */
+wizard-define-face > div > md-content > md-input-container > div {
+	order: 0 !important;
+}
+
+md-toast.md-error-toast-theme {
+    background-color: #F44336;
 }

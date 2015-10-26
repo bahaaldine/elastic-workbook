@@ -1,0 +1,14 @@
+<div class="workbook text wizard" ng-controller="wizardCtrl as ctrl">
+
+  <wizard-step-type type="{{wizard.step}}"></wizard-step-type>
+
+  <div layout="row" class="md-padding" layout-align="end center">
+      <md-button 
+        class="md-raised md-secondary" ng-click="previousStep()">Previous</md-button>
+      <md-button ng-if="!isFinalStep()" 
+        class="md-raised md-primary" ng-click="nextStep()">Next</md-button>
+      <md-button ng-if="isFinalStep()" 
+        class="md-raised md-primary" ng-click="save()">Save</md-button>
+  </div>
+
+</div>

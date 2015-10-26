@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('workbook.demos.fulltextsearch', [])
+angular.module('workbook.faces.fulltextsearch', [])
 .controller('fullTextSearchCtrl', ['$scope', 'ESClient', '$parse', '$timeout', '$q', '$log',
   function ($scope, ESClient, $parse, $timeout, $q, $log) {
     var self = this;
@@ -9,6 +9,11 @@ angular.module('workbook.demos.fulltextsearch', [])
     self.querySearch   = querySearch;
     $scope.vOneBoost = 1;
     $scope.vTwoBoost = 1;
+
+    $scope.component = {
+      description: " <h3>Description</h3><br />This demos showcases the fuzzysearch query feature of Elasticsearch.<br />Start <b>typing an address</b> to trigger the search !",
+      
+    }
 
     $scope.$watch('vOneBoost', function(boost){
       if ( angular.isDefined( $scope.request ) ) {

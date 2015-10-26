@@ -55,6 +55,10 @@ angular.module('workbook.controllers', [])
       return selected;
     }
 
+    $scope.openCreateFaceWizard = function() {
+      $state.transitionTo('home.wizard');
+    };
+
     $scope.vm = vm;
     $scope.$state = $state;
   }]);
