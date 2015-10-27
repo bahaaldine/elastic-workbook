@@ -25,7 +25,7 @@ angular.module('workbook.elasticsearch.factories', [])
 
       this.request = {
         index: this.indexName,
-        type: document.type.type,
+        type: document.faceType.type,
         body: document
       }
 
@@ -43,14 +43,15 @@ angular.module('workbook.elasticsearch.factories', [])
       }.bind(this), function (err) {
         deferred.reject(err);
       });
+    } else {
+      deferred.reject({error: "missing request"});
     }
     return deferred.promise;
   }
 
   ESClient.prototype.nextPage = function(request) {
-
+    var deferred = $q.defer();
     if ( angular.isDefined(request) ) {
-      var deferred = $q.defer();
 
       this.request = request;
 
@@ -80,9 +81,11 @@ angular.module('workbook.elasticsearch.factories', [])
         console.trace(err.message);
         deferred.reject(err);
       });
-
-      return deferred.promise;
+    } else {
+      deferred.reject({error: "missing request"});
     }
+
+    return deferred.promise;
   };
 
   ESClient.prototype.getFaces = function(request) {
@@ -117,6 +120,34 @@ angular.module('workbook.elasticsearch.factories', [])
       }.bind(this), function (err) {
         deferred.reject(err);
       });
+    } else {
+      deferred.reject({error: "missing request"});
+    }
+    return deferred.promise;
+  };
+
+  ESClient.prototype.getFaceDocumentCount = function(request) {
+    var deferred = $q.defer();
+    if ( angular.isDefined(request.index) && request.index.length > 0 ) {
+
+      this.request = request;
+
+      if ( !angular.isDefined(this.response) ) {
+        this.response = {};
+      }
+
+      this.busy = true;
+      es.count(request).then(function (resp) {
+        if ( angular.isDefined(resp) ) {
+          this.response = resp;
+          deferred.resolve(this);
+        }
+        this.busy = false;
+      }.bind(this), function (err) {
+        deferred.reject(err);
+      });
+    } else {
+      deferred.reject({error: "missing request"});
     }
     return deferred.promise;
   };
@@ -139,6 +170,8 @@ angular.module('workbook.elasticsearch.factories', [])
       }.bind(this), function (err) {
         deferred.reject(err);
       });
+    } else {
+      deferred.reject({error: "missing request"});
     }
     return deferred.promise;
   };
@@ -168,6 +201,8 @@ angular.module('workbook.elasticsearch.factories', [])
       }.bind(this), function (err) {
         deferred.reject(err);
       });
+    } else {
+      deferred.reject({error: "missing request"});
     }
     return deferred.promise;
   };
@@ -190,7 +225,7 @@ angular.module('workbook.elasticsearch.factories', [])
         // with the uuids array, so we won't have duplicate shown to user
         var fields = [];
         var uuids = [];
-        angular.forEach(resp, function(value, key){
+        angular.forEach(resp, function(value, key) {
           fields = fields.concat(
             flattenJsonMapping(uuids, value.mappings).fields
           );
@@ -211,6 +246,8 @@ angular.module('workbook.elasticsearch.factories', [])
       }.bind(this), function (err) {
         deferred.reject(err);
       });
+    } else {
+      deferred.reject({error: "missing request"});
     }
     return deferred.promise;
   };
@@ -237,13 +274,15 @@ angular.module('workbook.elasticsearch.factories', [])
         }
       } else {
         newField = {
-          documentType: field.type,
+          documentType: ( angular.isDefined(field.documentType) ? field.documentType : field.type ),
           array_path: field.array_path+"[\""+key+"\"]",
           dot_path: field.dot_path+(field.dot_path.length > 0 ? "." : "" )+key,
           name: key,
           type: value.type
         }
       }
+
+      console.log(newField)
 
       if ( angular.isDefined(value.properties) ) {
         fields = fields.concat(flattenJsonMapping(uuids, value.properties, newField).fields);

@@ -25,6 +25,7 @@ angular
     'ngOdometer',
     'workbook.controllers',
     'workbook.filters',
+    'workbook.factories',
     'workbook.elasticsearch',
     'workbook.menu',
     'workbook.wizard',

@@ -2,15 +2,15 @@
 'use strict';
 
 angular.module('workbook.faces.fuzzysearch.controllers', [])
-.controller('fuzzySearchCtrl', ['$scope', 'ESClient', '$parse', '$timeout', '$q', '$log',
-  function ($scope, ESClient, $parse, $timeout, $q, $log) {
+.controller('fuzzySearchCtrl', ['$scope', 'ESClient', '$parse', '$q', 'WorkbookService',
+  function ($scope, ESClient, $parse, $q, WorkbookService) {
     var self = this;
     var component = $scope.component;
 
     self.querySearch = querySearch;
     self.component = component;
-    self.getComponentResultTitle = getComponentResultTitle;
-    self.getComponentResultDescription = getComponentResultDescription;
+    self.toPrettyJSON = WorkbookService.toPrettyJSON;
+    self.toSummary = WorkbookService.toSummary;
 
     $scope.esClient = new ESClient(component.paging.pageSize, component.paging.from);
 
@@ -24,11 +24,9 @@ angular.module('workbook.faces.fuzzysearch.controllers', [])
 			  body: {
           from: component.paging.from,
           size: component.paging.pageSize,
-          fields: component.fields.map(function(field) {
-            return field.name;
-          }),
+          fields: [component.searchInput, "_source"],
           query: {
-            match: buildMathQuery(component.typeAheadValue, query)
+            match: buildMathQuery(component.searchInput, query)
           }
         }
 			};
@@ -36,27 +34,13 @@ angular.module('workbook.faces.fuzzysearch.controllers', [])
 			$scope.esClient.nextPage($scope.request).then( function(client) {
 				deferred.resolve( client.response.map( function (hit) {
           return {
-            value: hit.fields[component.itemTitle][0],
-            display: hit.fields[component.itemTitle][0]
+            value: hit.fields[component.searchInput][0],
+            display: hit.fields[component.searchInput][0]
           };
 	      }));
 			});
 
       return deferred.promise;
-    }
-
-    function getComponentResultTitle(index) {
-      // TODO: should not be necessary  
-      if ( angular.isDefined($scope.esClient.response[index].fields[component.itemTitle]) ) {
-        return $scope.esClient.response[index].fields[component.itemTitle][0];
-      }
-    }
-
-    function getComponentResultDescription(index) {
-      // TODO: should not be necessary  
-      if ( angular.isDefined($scope.esClient.response[index].fields[component.itemDescription]) ) {
-        return $scope.esClient.response[index].fields[component.itemDescription][0];
-      }
     }
 
     function buildMathQuery(key, query) {
@@ -68,27 +52,5 @@ angular.module('workbook.faces.fuzzysearch.controllers', [])
       }
       return jsonObject;
     }
-
-
-    function selectedItemChange(item) {
-      $log.info('Item changed to ' + JSON.stringify(item));
-    }
-
-    var _lastGoodResult = '';
-    $scope.toPrettyJSON = function (json, tabWidth) {
-      var objStr = JSON.stringify(json);
-      var obj = null;
-      try {
-        obj = $parse(objStr)({});
-      } catch(e){
-        // eat $parse error
-        return _lastGoodResult;
-      }
-
-      var result = JSON.stringify(obj, null, Number(tabWidth));
-      _lastGoodResult = result;
-
-      return result;
-    };
 	}])
 })();

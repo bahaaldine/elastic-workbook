@@ -12,8 +12,8 @@ angular.module('workbook.wizard.controllers', [])
   function ($scope, ESClient, $q, $mdToast, $location, $window) {
 
     var workflows = {
-      text: ['wizardDefineFace', 'wizardIndices', 'wizardSearchInput', 'wizardSearchOutput', 'wizardLayout'],
-      map: ['wizardDefineFace', 'wizardIndices', 'wizardSearchInput', 'wizardSearchOutput', 'wizardLayout']
+      text: ['wizardDefineFace', 'wizardIndices', 'wizardSearchInput', 'wizardLayout'],
+      map: ['wizardDefineFace', 'wizardIndices', 'wizardSearchInput', 'wizardLayout']
     };
     var self = this;
 
@@ -29,8 +29,7 @@ angular.module('workbook.wizard.controllers', [])
           selected: []
         },
         output: {
-          isSelected: [],
-          added: []
+          selected: []
         }
       },
       show: {
@@ -63,16 +62,28 @@ angular.module('workbook.wizard.controllers', [])
 
       $scope.esClient = new ESClient();
       $scope.esClient.getFace(request).then( function(client) {
+        
         $scope.wizard.component = client.response._source;
-
         $scope.wizard.name = $scope.wizard.component.name;
-        $scope.wizard.index.added = $scope.wizard.component.index;
-        $scope.wizard.faces.selected = $scope.wizard.component.type;
-        $scope.wizard.fields.input.selected.type = $scope.wizard.component.documentType;
-        $scope.wizard.pageSize = $scope.wizard.paging.pageSize;
+        $scope.wizard.indices = {
+          added: $scope.wizard.component.index,
+          isSelected: []
+        }
+        angular.forEach($scope.wizard.component.index, function(index, key) {
+          $scope.wizard.indices.isSelected[index] = true;
+        });
+
+        $scope.wizard.faces.selected = $scope.wizard.component.type.type;
+        $scope.wizard.fields.input.selected = $scope.wizard.component.typeAheadValue;
+        $scope.wizard.pageSize = $scope.wizard.component.paging.pageSize;
+        
         $scope.wizard.fields.output.added = $scope.wizard.component.fields;
         $scope.wizard.fields.output.added[0].name = $scope.wizard.component.itemTitle;
-        $scope.wizard.fields.input.selected.dot_path = $scope.wizard.component.typeAheadValue;
+        angular.forEach($scope.wizard.fields.output.added, function(value){
+          $scope.wizard.fields.output.isSelected[value.dot_path] = true;
+        });
+      
+
         $scope.wizard.show = $scope.wizard.component.show;
 
       });
@@ -84,12 +95,18 @@ angular.module('workbook.wizard.controllers', [])
       $scope.wizard.indices.available = client.response;
     });
 
+    var getStep = function(step) {
+      var faceType = $scope.wizard.faces.available.filter( function(face) {
+        return face.type == $scope.wizard.faces.selected;
+      });
+
+      var workflow = workflows[faceType[0].searchType];
+      $scope.wizard.step = workflow[workflow.indexOf($scope.wizard.step) + step];
+    }
+
     $scope.nextStep = function() {
-      $scope.wizard.validateStep().then(function(valid){
-        var workflow = workflows[$scope.wizard.faces.selected.searchType];
-        console.info($scope.wizard.step + ' valid' );
-        console.info("next step : " + workflow[workflow.indexOf($scope.wizard.step)+1] );
-        $scope.wizard.step = workflow[workflow.indexOf($scope.wizard.step)+1];
+      $scope.wizard.validateStep().then( function(valid) {
+        getStep(+1);       
       }, function(notValid) {
         console.info($scope.wizard.step + ' invalid');
       });
@@ -99,15 +116,23 @@ angular.module('workbook.wizard.controllers', [])
       if ( angular.isUndefined($scope.wizard.faces.selected) ) {
         return false;
       }
-      var workflow = workflows[$scope.wizard.faces.selected.searchType];
-      $scope.wizard.step = workflow[workflow.indexOf($scope.wizard.step)-1];
+      getStep(-1);
     }
 
     $scope.isFinalStep = function() {
       if ( angular.isUndefined($scope.wizard.faces.selected) ) {
         return false;
       }
-      var workflow = workflows[$scope.wizard.faces.selected.searchType];
+
+      var faceType = $scope.wizard.faces.available.filter( function(face) {
+        return face.type == $scope.wizard.faces.selected;
+      });
+
+      if ( angular.isUndefined(faceType) && faceType.length > 0 ) {
+        return false;
+      }
+
+      var workflow = workflows[faceType[0].searchType];
       return workflow.indexOf($scope.wizard.step) >= workflow.length-1 ;
     }
 
@@ -129,29 +154,34 @@ angular.module('workbook.wizard.controllers', [])
 
     $scope.save = function() {
 
+      var faceType = $scope.wizard.faces.available.filter( function(face) {
+        return face.type == $scope.wizard.faces.selected;
+      });
+
+      var searchInput = $scope.wizard.fields.available.filter( function(input) {
+        return input.dot_path == $scope.wizard.fields.input.selected;
+      });
+
+      console.log(searchInput)
+
       $scope.wizard.component = {
         name: $scope.wizard.name,
+        faceType: faceType[0],
         index: $scope.wizard.indices.added,
-        type: $scope.wizard.faces.selected,
-        documentType: $scope.wizard.fields.input.selected.type,
-        componentDescription: "<h3>Description</h3><br />This demos showcases the fuzzysearch query feature of Elasticsearch.<br />Start <b>typing an address</b> to trigger the search !",
-        documentationLink: "https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzzy-match-query.html#fuzzy-match-query",
+        documentType: searchInput[0].documentType,
+        searchInput: $scope.wizard.fields.input.selected,
+        show: $scope.wizard.show,
         paging: {
           from: 0,
           pageSize: $scope.wizard.pageSize
         },
-        fields: $scope.wizard.fields.output.added,
-        itemTitle: $scope.wizard.fields.output.added[0].name,
-        itemDescription: $scope.wizard.fields.output.added[0].name,
-        typeAheadValue: $scope.wizard.fields.input.selected.dot_path,
-        typeAheadDisplay: $scope.wizard.fields.input.selected.dot_path,
-        show: $scope.wizard.show
-      }
+        componentDescription: "<h3>Description</h3><br />This demos showcases the fuzzysearch query feature of Elasticsearch.<br />Start <b>typing an address</b> to trigger the search !",
+        documentationLink: "https://www.elastic.co/guide/en/elasticsearch/guide/current/fuzzy-match-query.html#fuzzy-match-query",
+      };
+
       $scope.esClient.index($scope.wizard.component).then(function(client) {
-        console.log(client.resp);
-        console.log(client.resp._id)
-        $location.path('/#/face/'+$scope.wizard.faces.selected.searchType);
-        $window.open('/#/feature?type='+$scope.wizard.faces.selected.type+'&face='+client.resp._id);
+        $location.path('/#/face/'+faceType[0].searchType);
+        $window.open('/#/feature?type='+faceType[0].type+'&face='+client.resp._id);
       }, function(err){
         $scope.showAlert("Error occured while creating Face: <br >" + JSON.stringify(err));
       });

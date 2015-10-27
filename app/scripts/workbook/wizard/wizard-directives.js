@@ -13,7 +13,6 @@
               var html = $compile(response.data)($scope);
               $element.replaceWith(html);
               $element = html;
-              //$compile($element)($scope);
               directive.link($scope, $element);
             });
           }
@@ -66,8 +65,11 @@
           if ( $scope.wizard.indices.added.length > 0 ) {
             // Here we get the mapping with indices, and search type
             // so fields can ba filetered based on the search type
+            var faceType = $scope.wizard.faces.available.filter( function(face) {
+              return face.type == $scope.wizard.faces.selected;
+            });
             $scope.esClient.getMapping({ index: $scope.wizard.indices.added }
-              , $scope.wizard.faces.selected.searchType).then(function(client) {
+              , faceType[0].searchType).then(function(client) {
               $scope.wizard.fields.available = client.resp;
               deferred.resolve(true);
             });
@@ -92,14 +94,15 @@
       link: function($scope, $element) {
         var validateStep = function() {
           var deferred = $q.defer();
-          if ( angular.isUndefined($scope.wizard.fields.input.selected.name) ) {
+
+          if ( angular.isUndefined($scope.wizard.fields.input.selected) ) {
             $scope.showAlert("Face input is required");
             deferred.reject(false);
           } else {
             deferred.resolve(true);
           }
 
-          return deferred.promise
+          return deferred.promise;
         }
 
         $scope.wizard.validateStep = validateStep;
@@ -115,15 +118,15 @@
       link: function($scope, $element) {
         var validateStep = function() {
           var deferred = $q.defer();
-          
-          if ( $scope.wizard.fields.output.added.length > 0 ) {
-            deferred.resolve(true);
-          } else {
-            $scope.showAlert("At least one Face output is required");
+
+          if ( angular.isUndefined($scope.wizard.fields.output.selected) ) {
+            $scope.showAlert("Face input is required");
             deferred.reject(false);
+          } else {
+            deferred.resolve(true);
           }
 
-          return deferred.promise
+          return deferred.promise;
         }
 
         $scope.wizard.validateStep = validateStep;

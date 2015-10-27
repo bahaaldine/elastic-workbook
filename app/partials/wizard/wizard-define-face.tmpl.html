@@ -18,7 +18,7 @@
       <md-radio-group name="faceType" ng-model="wizard.faces.selected" >
         <div ng-repeat='face in wizard.faces.available' class="row">
           <div flex layout="row" layout-padding layout-align="start center" >
-            <md-radio-button required layout="row" flex ng-value="face" class="md-primary">
+            <md-radio-button required layout="row" flex ng-value="face.type" class="md-primary">
               <div tyle="max-width:200px;">{{face.name}}</div>
             </md-radio-button>
           </div>

@@ -15,10 +15,20 @@ angular.module('workbook.home.controllers', [])
     var self = this;
     self.openFace = openFace;
     self.removeFace = removeFace;
+    self.editFace = editFace;
 
     $scope.esClient = new ESClient();      
     $scope.esClient.getFaces().then(function(client) {
-      $scope.faces = client.resp;
+      var faces = client.response;
+      
+      angular.forEach(client.response, function(face, index) {
+        var request = {index: face._source.index};
+        $scope.esClient.getFaceDocumentCount(request).then(function(countClient){
+          faces[index].count = countClient.response.count;
+        });
+      })
+
+      $scope.faces = faces;
     });
 
     function openFace(face) {
@@ -39,7 +49,7 @@ angular.module('workbook.home.controllers', [])
     }
 
     function editFace(face) {
-      $location.path('/#/wizard?type='+face._type+'&id='+face._id);
+      $location.path('wizard').search({type: face._type, id: face._id});
     }
   }]);
 })();

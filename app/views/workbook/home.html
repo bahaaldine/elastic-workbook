@@ -2,27 +2,16 @@
 	<md-card flex="60">
     <md-card-content>
     	<md-progress-linear md-mode="indeterminate" ng-if="esClient.busy"></md-progress-linear>
-		  <div layout="column" ng-if="esClient.response">
+		  <div layout="column" ng-if="faces">
         <md-content class="md-padding" infinite-scroll-container='".workbook-content-container"' infinite-scroll='esClient.nextPage(request)' infinite-scroll-disabled='esClient.busy' infinite-scroll-distance='1'>
           <md-list class="result-items">
-            <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
+            <md-list-item class="md-2-line" ng-repeat="result in faces">
               <div class="md-list-item-text" layout="row">
 								<h4 flex class="md-title">{{ result._source.name }}</h4>
-								<md-button class="md-fab" layout-align="end center" aria-label="open" ng-click="ctrl.openFace(result)">
-									<md-icon ng-style="{color: font.color}"
-					            aria-label="open"
-					            class="material-icons">open_in_new</md-icon>
-				        </md-button>
-				        <md-button class="md-fab" layout-align="end center" aria-label="edit" ng-click="ctrl.editFace(result)">
-									<md-icon ng-style="{color: font.color}"
-					            aria-label="remove"
-					            class="material-icons">edit</md-icon>
-				        </md-button>
-				        <md-button class="md-fab" layout-align="end center" aria-label="remove" ng-click="ctrl.removeFace(result)">
-									<md-icon ng-style="{color: font.color}"
-					            aria-label="remove"
-					            class="material-icons">delete</md-icon>
-				        </md-button>
+								<h4 flex class="md-title">{{ result.count }}</h4>
+								<md-button class="md-raised md-primary" aria-label="open" ng-click="ctrl.openFace(result)">open</md-button>
+				        <md-button class="md-raised md-primary" aria-label="edit" ng-click="ctrl.editFace(result)">edit</md-button>
+				        <md-button class="md-raised md-primary" aria-label="remove" ng-click="ctrl.removeFace(result)">delete</md-button>
               </div>
               <md-divider ng-if="!$last"></md-divider>
             </md-list-item>

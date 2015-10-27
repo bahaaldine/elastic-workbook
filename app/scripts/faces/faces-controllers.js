@@ -5,7 +5,7 @@ angular.module('workbook.faces.controllers', [])
 .controller('facesCtrl', ['$scope', 'ESClient', '$location', '$state',
   function ($scope, ESClient, $location, $state) {
     var self = this;
-    
+
     if ( angular.isDefined($location.$$search.type) 
     	&&  angular.isDefined($location.$$search.id) ) {
     	
@@ -18,7 +18,9 @@ angular.module('workbook.faces.controllers', [])
 		$scope.esClient = new ESClient();
     	$scope.esClient.getFace(request).then( function(client) {
     		$scope.component = client.response._source;
-    	});
+    	}, function(err){
+            console.log(err)
+        });
     }
 	}])
 })();

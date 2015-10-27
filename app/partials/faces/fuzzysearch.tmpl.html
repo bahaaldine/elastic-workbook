@@ -45,18 +45,18 @@
           <md-list class="result-items">
             <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
               <div class="md-list-item-text">
-                <h2 class="md-title">{{ ctrl.getComponentResultTitle($index) }}</h2>
-                <p>{{ ctrl.getComponentResultDescription($index) }}</p>
+                <h2 class="md-title">{{result.fields[component.searchInput][0]}}</h2>
+                <p class="md-title" ng-bind-html="ctrl.toSummary(result._source)"></p>
               </div>
             </md-list-item>
           </md-list>
         </md-content>
       </md-tab>
       <md-tab label="Request" ng-if="component.show.request">
-        <md-content class="md-padding" hljs source="toPrettyJSON(esClient.request, 2)"></md-content>
+        <md-content class="md-padding" hljs source="ctrl.toPrettyJSON(esClient.request, 2)"></md-content>
       </md-tab>
       <md-tab label="Response" ng-if="component.show.response">
-        <md-content class="md-padding" hljs source="toPrettyJSON(esClient.response.slice(0, 4), 2)"></md-content>
+        <md-content class="md-padding" hljs source="ctrl.toPrettyJSON(esClient.response.slice(0, 4), 2)"></md-content>
       </md-tab>
     </md-tabs>
   </div>
