@@ -11,6 +11,7 @@ angular.module('workbook.faces.fuzzysearch.controllers', [])
     self.component = component;
     self.toPrettyJSON = WorkbookService.toPrettyJSON;
     self.toSummary = WorkbookService.toSummary;
+    self.getResultURL = WorkbookService.getResultURL;
 
     $scope.esClient = new ESClient(component.paging.pageSize, component.paging.from);
 

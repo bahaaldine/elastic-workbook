@@ -40,6 +40,8 @@ module.exports = function(config) {
       'app/bower_components/odometer/odometer.min.js',
       'app/bower_components/angular-odometer/dist/angular-odometer.js',
       'app/bower_components/angular-messages/angular-messages.js',
+      'app/bower_components/lodash/dist/lodash.compat.js',
+      'app/bower_components/angular-json-human/dist/angular-json-human.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

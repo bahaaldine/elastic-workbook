@@ -138,3 +138,14 @@ wizard-define-face > div > md-content > md-input-container > div {
 md-toast.md-error-toast-theme {
     background-color: #F44336;
 }
+
+/* List view */
+md-content > md-list > md-list-item > div > h2.md-title {
+	font-weight: normal;
+	margin-bottom: 0px;
+	text-transform: capitalize;
+}
+
+md-content > md-list > md-list-item > div > a {
+	font-size: 14px;
+}

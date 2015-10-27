@@ -100,6 +100,32 @@ angular.module('workbook.elasticsearch.factories', [])
     return this.nextPage(request);
   };
 
+  ESClient.prototype.getResult = function(request) {
+    var deferred = $q.defer();
+    if ( angular.isDefined(request.index) && request.index.length > 0 ) {
+
+      this.request = request;
+
+      if ( !angular.isDefined(this.response) ) {
+        this.response = {};
+      }
+
+      this.busy = true;
+      es.get(request).then(function (resp) {
+        if ( angular.isDefined(resp) ) {
+          this.response = resp;
+          deferred.resolve(this);
+        }
+        this.busy = false;
+      }.bind(this), function (err) {
+        deferred.reject(err);
+      });
+    } else {
+      deferred.reject({error: "missing request"});
+    }
+    return deferred.promise;
+  };
+
   ESClient.prototype.getFace = function(request) {
     var deferred = $q.defer();
     if ( angular.isDefined(request.index) && request.index.length > 0 ) {
@@ -281,8 +307,6 @@ angular.module('workbook.elasticsearch.factories', [])
           type: value.type
         }
       }
-
-      console.log(newField)
 
       if ( angular.isDefined(value.properties) ) {
         fields = fields.concat(flattenJsonMapping(uuids, value.properties, newField).fields);

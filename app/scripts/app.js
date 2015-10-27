@@ -23,6 +23,7 @@ angular
     'elasticsearch',
     'hljs',
     'ngOdometer',
+    'yaru22.jsonHuman',
     'workbook.controllers',
     'workbook.filters',
     'workbook.factories',
@@ -30,6 +31,7 @@ angular
     'workbook.menu',
     'workbook.wizard',
     'workbook.home',
+    'workbook.result',
     'workbook.faces'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$logProvider',
@@ -54,6 +56,18 @@ angular
             '@': {
               templateUrl: 'views/workbook/wizard.html'
             }
+          }
+        })
+        .state('home.result', {
+          url: 'result',
+          views: {
+            '@': {
+              templateUrl: 'views/workbook/result.html'
+            }
+          },
+          hide: {
+            sidenav: true,
+            toolbar: true
           }
         })
         .state('home.face', {

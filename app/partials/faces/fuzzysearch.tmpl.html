@@ -46,6 +46,7 @@
             <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
               <div class="md-list-item-text">
                 <h2 class="md-title">{{result.fields[component.searchInput][0]}}</h2>
+                <a href="{{ctrl.getResultURL(result)}}" target="_blank">{{ctrl.getResultURL(result)}}</a>
                 <p class="md-title" ng-bind-html="ctrl.toSummary(result._source)"></p>
               </div>
             </md-list-item>

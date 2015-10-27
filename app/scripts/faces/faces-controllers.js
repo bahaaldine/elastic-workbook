@@ -22,5 +22,5 @@ angular.module('workbook.faces.controllers', [])
             console.log(err)
         });
     }
-	}])
+  }]);
 })();
