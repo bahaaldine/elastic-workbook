@@ -17,4 +17,38 @@
         });
       }
     };
+  }])
+  .directive('faceHeader', [ function() {
+    return {
+      restrict: 'E',
+      scope: true,
+      templateUrl: 'partials/faces/face-header.tmpl.html',
+      link: function($scope, $element) {
+      }
+    };
+  }])
+  .directive('faceResultListView', ['WorkbookService',
+     function(WorkbookService) {
+    return {
+      restrict: 'E',
+      scope: true,
+      templateUrl: 'partials/faces/face-list-view.tmpl.html',
+      link: function($scope, $element) {
+      },
+      controller: function($scope) {
+        $scope.ctrl.toPrettyJSON = WorkbookService.toPrettyJSON;
+        $scope.ctrl.toSummary = WorkbookService.toSummary;
+        $scope.ctrl.getResultURL = WorkbookService.getResultURL;
+      }
+    };
+  }])
+  .directive('faceSearchBar', [
+     function() {
+    return {
+      restrict: 'E',
+      scope: true,
+      templateUrl: 'partials/faces/face-search-bar.tmpl.html',
+      link: function($scope, $element) {
+      }
+    };
   }]);

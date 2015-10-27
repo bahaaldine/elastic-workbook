@@ -144,6 +144,7 @@ md-content > md-list > md-list-item > div > h2.md-title {
 	font-weight: normal;
 	margin-bottom: 0px;
 	text-transform: capitalize;
+	font-size: 16px;
 }
 
 md-content > md-list > md-list-item > div > a {
