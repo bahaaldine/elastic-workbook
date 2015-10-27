@@ -24,6 +24,7 @@ angular
     'hljs',
     'ngOdometer',
     'yaru22.jsonHuman',
+    'workbook.directives',
     'workbook.controllers',
     'workbook.filters',
     'workbook.factories',

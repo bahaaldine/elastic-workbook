@@ -1,0 +1,12 @@
+<div layout="column">
+  <md-content class="md-default-theme" layout-padding>
+  <div layout="row" layout-align="end end">
+    <div flex="80" ng-if="component.show.description">
+      <p ng-bind-html="component.componentDescription"></p>
+    </div>
+    <div flex="20" ng-if="component.show.documentationLink">
+      <md-button href="{{component.documentationLink}}" target="_blank" md-autofocus>Open documentation</md-button> 
+    </div>
+  </div>
+  </md-content>
+</div>

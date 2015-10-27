@@ -1,0 +1,33 @@
+<div>
+  <md-progress-linear md-mode="indeterminate" ng-if="esClient.busy"></md-progress-linear>
+  <div layout="column" ng-if="esClient.response">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Resuts">
+        <md-content class="md-padding" 
+          infinite-scroll-container='".workbook-content-container"' 
+          infinite-scroll='esClient.nextPage(request)' 
+          infinite-scroll-disabled='esClient.busy' 
+          infinite-scroll-distance='1'>
+          <div layout="row" layout-align="end center">
+            <h2><span>hits</span>: <span><ng-odometer value="esClient.total"></ng-odometer></span></h2>
+          </div>
+          <md-list class="result-items">
+            <md-list-item class="md-2-line" ng-repeat="result in esClient.response">
+              <div class="md-list-item-text">
+                <h2 class="md-title">{{result.fields[component.searchInput][0]}}</h2>
+                <a href="{{ctrl.getResultURL(result)}}" target="_blank">{{ctrl.getResultURL(result)}}</a>
+                <p class="md-title" ng-bind-html="ctrl.toSummary(result._source)"></p>
+              </div>
+            </md-list-item>
+          </md-list>
+        </md-content>
+      </md-tab>
+      <md-tab label="Request" ng-if="component.show.request">
+        <md-content class="md-padding" hljs source="ctrl.toPrettyJSON(esClient.request, 2)"></md-content>
+      </md-tab>
+      <md-tab label="Response" ng-if="component.show.response">
+        <md-content class="md-padding" hljs source="ctrl.toPrettyJSON(esClient.response.slice(0, 4), 2)"></md-content>
+      </md-tab>
+    </md-tabs>
+  </div>
+</div>
